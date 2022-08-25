@@ -2,6 +2,32 @@ const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const solve = require('./solver.js');
 puppeteer.use(StealthPlugin());
+const { app, BrowserWindow } = require('electron')
+
+const createWindow = () => {
+    const win = new BrowserWindow({
+        width: 950,
+        height: 710,
+        resizable: false
+    })
+    win.loadFile('index.html')
+    win.setMenu(null)
+    win.webContents.openDevTools()
+}
+
+app.whenReady().then(() => {
+createWindow()
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    })
+})
+
+app.on('window-all-closed', () => {
+if (process.platform !== 'darwin') app.quit()
+})
+
+
 
 const status = {
     started: new Date().toISOString(),
@@ -18,15 +44,13 @@ const status = {
 };
 
 var msg = "Some string for testing purposes";
-
 var targetAvg = 25;
-var headless = false;
+var headless = true;
 var language = "pt-BR";
 
 var browser;
 var page;
 
-launchBrowser();
 async function launchBrowser(){
     console.log("Launching browser...");
     browser = await puppeteer.launch({ headless: headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});

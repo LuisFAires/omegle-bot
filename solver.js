@@ -121,7 +121,6 @@ async function solve(page, mainWindow) {
 
       } catch (e) {
         mainWindow.webContents.send('activity',"Captcha: answer not aceppted, tryng again...");
-        mainWindow.webContents.send('activity',stop);
         continue
       }
     }

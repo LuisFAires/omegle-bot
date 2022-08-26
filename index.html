@@ -7,7 +7,7 @@
 <body>
     <header>
         <div>
-            <img src="logomasked.png">
+            <img src="logomasked.png" ondragstart="return false;">
             <span id="title">bot</span>
         </div>
         <input id='submit' type="submit" value="Start" onclick="onButtonClick()">
@@ -17,7 +17,7 @@
             <legend>Options</legend>
             <form>
                 <div class="formDiv">
-                    <label for='Message'>Message: </label>
+                    <label for='Message'>Messages: </label>
                     <textarea id='Message' required></textarea>
                 </div>
 
@@ -33,7 +33,7 @@
 
                 <div class="formDiv">
                     <label for='Language'>Language: </label>
-                    <select name="Language">
+                    <select name="Language" id="Language">
                         <option value="af">af</option>
                         <option value="sq">sq</option>
                         <option value="ar-SA">ar-SA</option>
@@ -226,6 +226,6 @@
     </fieldset>
 
 </body>
-<script defer src="index.js"></script>
+<script defer src="renderer.js"></script>
 
 </html>

@@ -7,7 +7,7 @@ function rdn(min, max) {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
-async function solve(page) {
+async function solve(page, mainWindow) {
   try {
 
     //wait to load
@@ -56,7 +56,7 @@ async function solve(page) {
           return !!iframe.contentWindow.document.querySelector('.rc-audiochallenge-tdownload-link')
         }, { timeout: 5000 })
       } catch (e) {
-        console.log(e.toString());
+        mainWindow.webContents.send('activity',e.toString());
         return "Captcha: unable to solve!!!";
         continue
       }
@@ -120,13 +120,13 @@ async function solve(page) {
         return page.evaluate(() => document.getElementById('g-recaptcha-response').value)
 
       } catch (e) {
-        console.log("Captcha: answer not aceppted, tryng again...");
-        console.log(e.toString());
+        mainWindow.webContents.send('activity',"Captcha: answer not aceppted, tryng again...");
+        mainWindow.webContents.send('activity',stop);
         continue
       }
     }
   } catch (e) {
-    console.log(e.toString());
+    mainWindow.webContents.send('activity',e.toString());
     return "Captcha: unable to solve!!!";
   }
 }

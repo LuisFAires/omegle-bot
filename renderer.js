@@ -1,4 +1,5 @@
 targetspan.innerHTML = Target.value;
+backdropRefresh();
 
 /*
 let infos = document.getElementsByClassName('status');
@@ -6,11 +7,30 @@ for (info of infos) {
     info.innerHTML = "[00.00, 00.00, 00.00, 00.00, 00.00]";
     //info.innerHTML = "2011-10-05T14:48:00.000Z";
     activity.value += "\nsomething\nsomething else\nMessage not sent, problably stranger disconnected\nmore";
-}*/
-
+}
 activity.scrollTop = activity.scrollHeight;
+*/
 
-let working = false;
+function backdropRefresh(){
+    let css = window.getComputedStyle(Message);
+    let cssstring = "";
+    for (let i = 0; i < css.length; i++) {
+        cssstring +=(css[i] +': '+css.getPropertyValue(css[i])+";");
+    }
+    backdrop.style = cssstring;
+    backdrop.style.position = 'absolute';
+    backdrop.style.zIndex = '-1'
+    backdrop.style.backgroundColor = '#fff';
+    backdrop.style.fontColor ='#f00';
+    backdrop.scrollTop = Message.scrollTop;
+    backdrop.innerHTML = "";
+    let colors = ['#fff', '#3f9fff', '#ff7f00'];
+    let i = 0
+    for(section of Message.value.split("\n")){
+        backdrop.innerHTML += "<span style='background-color: "+colors[i]+"'>"+section+"</span><br>"
+        i < colors.length-1 ? i++ : i = 0
+    }
+}
 
 function onButtonClick(){
     if(working === false){

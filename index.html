@@ -18,7 +18,9 @@
             <form>
                 <div class="formDiv">
                     <label for='Message'>Messages: </label>
-                    <textarea id='Message' required></textarea>
+                    <br>
+                    <div id="backdrop"></div>
+                    <textarea id='Message' oninput='backdropRefresh()' onscroll='backdropRefresh()' required></textarea>
                 </div>
 
                 <div class="formDiv">

@@ -56,7 +56,7 @@ ipcMain.on('start', function(event, args){
     status.lastSent = "";
     status.avgPerMinute = NaN;
     status.instantAvg = [];
-    status.delay = 20;
+    status.delay = 50;
     status.totalSent = 0;
     status.notSent = 0;
     status.errorIntervals = [];

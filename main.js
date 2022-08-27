@@ -31,8 +31,6 @@ const createWindow = () => {
     mainWindow.loadFile('index.html')
     mainWindow.setMenu(null)
     //mainWindow.webContents.openDevTools()
-
-
 }
 
 if (process.platform === 'win32'){
@@ -78,11 +76,6 @@ ipcMain.on('start', function(event, args){
 ipcMain.on('stop', function() {
     stop = true;
 })
-/*
-ipcMain.send('stoped')
-
-ipcMain.send('statusUpdate')
-*/
 
 async function launchBrowser(){
     mainWindow.webContents.send('activity',"Launching browser...");

@@ -1,5 +1,6 @@
 targetspan.innerHTML = Target.value;
 backdropRefresh();
+let working  = false;
 
 /*
 let infos = document.getElementsByClassName('status');

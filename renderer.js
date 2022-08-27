@@ -1,18 +1,5 @@
 targetspan.innerHTML = Target.value;
 
-window.electronAPI.stoped((ev,args)=>{
-    botStoped();
-    new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
-})
-
-window.electronAPI.activity((ev,args)=>{
-    newActivity(args);
-})
-
-window.electronAPI.statusUpdate((ev,args)=>{
-    updateStatus(args);
-})
-
 /*
 let infos = document.getElementsByClassName('status');
 for (info of infos) {
@@ -90,3 +77,16 @@ function botStoped(){
     submit.style = '';
     submit.value = 'Start'
 }
+
+window.electronAPI.stoped((ev,args)=>{
+    botStoped();
+    new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
+})
+
+window.electronAPI.activity((ev,args)=>{
+    newActivity(args);
+})
+
+window.electronAPI.statusUpdate((ev,args)=>{
+    updateStatus(args);
+})

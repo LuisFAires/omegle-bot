@@ -99,9 +99,10 @@ function botStoped(){
     submit.value = 'Start'
 }
 
-window.electronAPI.stoped((ev,args)=>{
+window.electronAPI.stoped(()=>{
     botStoped();
     new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
+        .onclick = () => window.electronAPI.maximize();
 })
 
 window.electronAPI.activity((ev,args)=>{

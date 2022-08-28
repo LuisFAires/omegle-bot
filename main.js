@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const solve = require('./solver.js');
 puppeteer.use(StealthPlugin());
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron')
 const path = require('path')
 
 let mainWindow;
@@ -31,50 +31,80 @@ const createWindow = () => {
     mainWindow.loadFile('index.html')
     mainWindow.setMenu(null)
     //mainWindow.webContents.openDevTools()
+
+    mainWindow.on('minimize',function(event){
+        event.preventDefault();
+        mainWindow.hide();
+    });
 }
 
 if (process.platform === 'win32'){
     app.setAppUserModelId(app.name);
 }
 
+let tray = null
 app.whenReady().then(() => {
     createWindow()
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
-})
 
-app.on('window-all-closed', () => {
-if (process.platform !== 'darwin') app.quit()
-stop = true
-})
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') app.quit()
+        stop = true
+        })
 
-ipcMain.on('start', function(event, args){
+    tray = new Tray(path.join(__dirname, 'logocropped.png'))
+    var contextMenu = Menu.buildFromTemplate([
+        { label: 'Stop', click:  function(){
+            stop = true;
+        } },
+        { label: 'Show App', click:  function(){
+            mainWindow.show();
+        } },
+        { label: 'Quit', click:  function(){
+            app.isQuiting = true;
+            app.quit();
+        } }
+    ]);
+    tray.on('click', () => {
+        mainWindow.show();
+    })
+    tray.setToolTip('Omegle bot')
+    tray.setContextMenu(contextMenu)
 
-    status.started = new Date().toISOString();
-    status.lastSent = "";
-    status.avgPerMinute = NaN;
-    status.instantAvg = [];
-    status.delay = 50;
-    status.totalSent = 0;
-    status.notSent = 0;
-    status.errorIntervals = [];
-    status.errorLastDate = '';
-    status.captchaIntervals = [];
-    status.captchaLastDate = '';
+        
+    ipcMain.on('start', function(event, args){
 
-    msg = args.msg;
-    targetAvg = args.targetAvg;
-    headless = args.headless;
-    language = args.language;
-    stop = false;
+        status.started = new Date().toISOString();
+        status.lastSent = "";
+        status.avgPerMinute = NaN;
+        status.instantAvg = [];
+        status.delay = 50;
+        status.totalSent = 0;
+        status.notSent = 0;
+        status.errorIntervals = [];
+        status.errorLastDate = '';
+        status.captchaIntervals = [];
+        status.captchaLastDate = '';
 
-    launchBrowser();
-});
+        msg = args.msg;
+        targetAvg = args.targetAvg;
+        headless = args.headless;
+        language = args.language;
+        stop = false;
 
-ipcMain.on('stop', function() {
-    stop = true;
+        launchBrowser();
+    });
+
+    ipcMain.on('stop', () =>{
+        stop = true;
+    })
+
+    ipcMain.on('maximize', () => {
+        mainWindow.show();
+    })
 })
 
 async function launchBrowser(){
@@ -107,7 +137,12 @@ async function agreementScreen(){
         chatScreen()
     }catch(e){
         page.close();
-        agreementScreen();
+        if(stop != false){
+            agreementScreen();
+        }else{
+            browser.close();
+            mainWindow.webContents.send('stoped');
+        }
     }
 }
 

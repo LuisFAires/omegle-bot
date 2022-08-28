@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     stop: () => ipcRenderer.send('stop'),
     stoped: (args) => ipcRenderer.on('stoped',args),
     activity: (args) => ipcRenderer.on('activity',args),
-    statusUpdate: (args) => ipcRenderer.on('statusUpdate',args)
+    statusUpdate: (args) => ipcRenderer.on('statusUpdate',args),
+    maximize: () => ipcRenderer.send('maximize')
 })

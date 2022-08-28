@@ -11,6 +11,7 @@ body {
     align-items: center;
     margin: 0;
     user-select: none;
+    counter-reset: section;
 }
 
 header {
@@ -97,11 +98,23 @@ form {
     width: 100%;
 }
 
+.backdropSpan::before {
+    counter-increment: section;
+    content: counter(section)'.';
+    position: absolute;
+    left: 4px;
+}
+
+.backdropSpan {
+    display: block;
+}
+
 #Message {
     background-color: rgba(0, 0, 0, 0);
     width: 100%;
     height: 170px;
     resize: none;
+    padding-left: 30px
 }
 
 #statusContainer {

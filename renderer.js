@@ -25,10 +25,10 @@ function backdropRefresh(){
     backdrop.style.fontColor ='#f00';
     backdrop.scrollTop = Message.scrollTop;
     backdrop.innerHTML = "";
-    let colors = ['#fff', '#3f9fff', '#ff7f00'];
+    let colors = ['#ddd', '#fff'];
     let i = 0
     for(section of Message.value.split("\n")){
-        backdrop.innerHTML += "<span style='background-color: "+colors[i]+"'>"+section+"</span><br>"
+        backdrop.innerHTML += "<span class='backdropSpan' style='background-color: "+colors[i]+"'>"+section+"</span>"
         i < colors.length-1 ? i++ : i = 0
     }
 }

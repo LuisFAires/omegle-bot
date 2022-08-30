@@ -13,6 +13,10 @@ activity.scrollTop = activity.scrollHeight;
 */
 
 function backdropRefresh(){
+    if(Message.value.indexOf('\n') === 0) {
+        Message.value = Message.value.slice(1, Message.value.length);
+    }
+    Message.value = Message.value.replace(/\n\n/g, '\n')
     let css = window.getComputedStyle(Message);
     let cssstring = "";
     for (let i = 0; i < css.length; i++) {
@@ -22,13 +26,14 @@ function backdropRefresh(){
     backdrop.style.position = 'absolute';
     backdrop.style.zIndex = '-1'
     backdrop.style.backgroundColor = '#fff';
-    backdrop.style.fontColor ='#f00';
     backdrop.scrollTop = Message.scrollTop;
-    backdrop.innerHTML = "";
-    let colors = ['#ddd', '#fff'];
+    backdrop.innerHTML = "";    
+    let colors = ['#ddd', '#eee'];
     let i = 0
-    for(section of Message.value.split("\n")){
-        backdrop.innerHTML += "<span class='backdropSpan' style='background-color: "+colors[i]+"'>"+section+"</span>"
+    for(let section of Message.value.split("\n")){
+        section = section.replace(/</g, '&lt');
+        section = section.replace(/>/g, '&gt');
+        backdrop.innerHTML += "<span class='backdropSpan' style='background-color: "+colors[i]+";'>"+section+"</span>"
         i < colors.length-1 ? i++ : i = 0
     }
 }

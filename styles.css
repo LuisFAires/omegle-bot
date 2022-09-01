@@ -7,7 +7,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin: 0;
     user-select: none;
@@ -20,11 +20,22 @@ header {
     justify-content: space-between;
     height: 57px;
     width: 98%;
+    padding: 8px;
+    box-shadow: 0 0.25em 0.75em #ccc;
+    background-color: #fff;
 }
 
 img {
     width: 236px;
     height: 57px;
+}
+
+#mainSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #target,
@@ -44,23 +55,28 @@ select {
 }
 
 #title {
-    font-size: 70px;
+    display: inline-block;
+    transform: rotate(-4deg);
+    font-size: 40px;
+    font-weight: bold;
+    position: relative;
+    top: -10px;
+    left: 10px;
 }
 
 fieldset {
     margin-top: 5px;
     background-color: #fff;
     border-radius: 0.5em;
+    border: 1px solid #CCC;
     box-shadow: inset 0 0 0.5em #bbb;
 }
 
 legend {
     font-weight: bold;
     background-color: #fff;
-    border: solid;
-    border-color: #6c6c6c;
+    border: 1px solid #CCC;
     border-radius: 0.5em;
-    border-width: 1px;
 }
 
 #fieldsetContainer {
@@ -143,4 +159,32 @@ form {
     height: 100%;
     width: 100%;
     resize: none;
+}
+
+#troubleshotButton {
+    float: right;
+}
+
+#troubleshotOverlay {
+    display: none;
+    z-index: 3;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#troubleshotContent {
+    font-size: 17px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 0.5em;
+    width: 80vw;
+    height: 80vh;
+    transform: translate(-50%, -50%);
 }

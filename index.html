@@ -12,222 +12,280 @@
         </div>
         <input id='submit' type="submit" value="Start" onclick="onButtonClick()">
     </header>
-    <div id="fieldsetContainer">
-        <fieldset id="OptionsFieldset">
-            <legend>Options</legend>
-            <form>
-                <div class="formDiv">
-                    <label for='Message'>Messages: </label>
-                    <br>
-                    <div id="backdrop"></div>
-                    <textarea id='Message' oninput='backdropRefresh()' onscroll='backdropRefresh()' required></textarea>
-                </div>
+    <section id="mainSection">
+        <div id="fieldsetContainer">
+            <fieldset id="OptionsFieldset">
+                <legend>Options</legend>
+                <form>
+                    <div class="formDiv">
+                        <label for='Message'>Messages: </label><span id="troubleshotButton"
+                            onclick="troubleshotOverlay.style.display = 'unset'">&#10067</span>
+                        <br>
+                        <div id="backdrop"></div>
+                        <textarea id='Message' oninput='backdropRefresh()' onscroll='backdropRefresh()'
+                            required></textarea>
+                    </div>
 
-                <div class="formDiv">
-                    <label for='Target'>Average per minute target: </label><span id="targetspan"></span>
-                    <input id='Target' type="range" min="5" max="40" value="15"
-                        oninput="targetspan.innerHTML = Target.value">
-                </div>
+                    <div class="formDiv">
+                        <label for='Target'>Average per minute target: </label><span id="targetspan"></span>
+                        <input id='Target' type="range" min="5" max="40" value="15"
+                            oninput="targetspan.innerHTML = Target.value">
+                    </div>
 
-                <div class="formDiv">
-                    <label for='Headless'>Hide browser interface: </label>
-                    <input id='Headless' type="checkbox" checked="true">
-                </div>
+                    <div class="formDiv">
+                        <label for='Headless'>Hide browser interface: </label>
+                        <input id='Headless' type="checkbox" checked="true">
+                    </div>
 
-                <div class="formDiv">
-                    <label for='Language'>Language: </label>
-                    <select name="Language" id="Language">
-                        <option value="af">af</option>
-                        <option value="ar-AE">ar-AE</option>
-                        <option value="ar-BH">ar-BH</option>
-                        <option value="ar-DZ">ar-DZ</option>
-                        <option value="ar-EG">ar-EG</option>
-                        <option value="ar-IQ">ar-IQ</option>
-                        <option value="ar-JO">ar-JO</option>
-                        <option value="ar-KW">ar-KW</option>
-                        <option value="ar-LB">ar-LB</option>
-                        <option value="ar-LY">ar-LY</option>
-                        <option value="ar-MA">ar-MA</option>
-                        <option value="ar-OM">ar-OM</option>
-                        <option value="ar-QA">ar-QA</option>
-                        <option value="ar-SA">ar-SA</option>
-                        <option value="ar-SY">ar-SY</option>
-                        <option value="ar-TN">ar-TN</option>
-                        <option value="ar-YE">ar-YE</option>
-                        <option value="be">be</option>
-                        <option value="bg">bg</option>
-                        <option value="ca">ca</option>
-                        <option value="cs">cs</option>
-                        <option value="da">da</option>
-                        <option value="de">de</option>
-                        <option value="de-AT">de-AT</option>
-                        <option value="de-CH">de-CH</option>
-                        <option value="de-LI">de-LI</option>
-                        <option value="de-LU">de-LU</option>
-                        <option value="el">el</option>
-                        <option value="en">en</option>
-                        <option value="en-AU">en-AU</option>
-                        <option value="en-BZ">en-BZ</option>
-                        <option value="en-CA">en-CA</option>
-                        <option value="en-EG">en-EG</option>
-                        <option value="en-GB">en-GB</option>
-                        <option value="en-IE">en-IE</option>
-                        <option value="en-JM">en-JM</option>
-                        <option value="en-NZ">en-NZ</option>
-                        <option value="en-TT">en-TT</option>
-                        <option value="en-US">en-US</option>
-                        <option value="en-ZA">en-ZA</option>
-                        <option value="es">es</option>
-                        <option value="es-AR">es-AR</option>
-                        <option value="es-BO">es-BO</option>
-                        <option value="es-CL">es-CL</option>
-                        <option value="es-CO">es-CO</option>
-                        <option value="es-CR">es-CR</option>
-                        <option value="es-DO">es-DO</option>
-                        <option value="es-EC">es-EC</option>
-                        <option value="es-GT">es-GT</option>
-                        <option value="es-HN">es-HN</option>
-                        <option value="es-MX">es-MX</option>
-                        <option value="es-NI">es-NI</option>
-                        <option value="es-PA">es-PA</option>
-                        <option value="es-PE">es-PE</option>
-                        <option value="es-PR">es-PR</option>
-                        <option value="es-PY">es-PY</option>
-                        <option value="es-SV">es-SV</option>
-                        <option value="es-UY">es-UY</option>
-                        <option value="es-VE">es-VE</option>
-                        <option value="et">et</option>
-                        <option value="eu">eu</option>
-                        <option value="fa">fa</option>
-                        <option value="fi">fi</option>
-                        <option value="fo">fo</option>
-                        <option value="fr">fr</option>
-                        <option value="fr-BE">fr-BE</option>
-                        <option value="fr-CA">fr-CA</option>
-                        <option value="fr-CH">fr-CH</option>
-                        <option value="fr-LU">fr-LU</option>
-                        <option value="gd">gd</option>
-                        <option value="gd-IE">gd-IE</option>
-                        <option value="he">he</option>
-                        <option value="hi">hi</option>
-                        <option value="hr">hr</option>
-                        <option value="hu">hu</option>
-                        <option value="id">id</option>
-                        <option value="is">is</option>
-                        <option value="it">it</option>
-                        <option value="it-CH">it-CH</option>
-                        <option value="ja">ja</option>
-                        <option value="ji">ji</option>
-                        <option value="ko">ko</option>
-                        <option value="lt">lt</option>
-                        <option value="lv">lv</option>
-                        <option value="mk">mk</option>
-                        <option value="mt">mt</option>
-                        <option value="nl">nl</option>
-                        <option value="nl-BE">nl-BE</option>
-                        <option value="no">no</option>
-                        <option value="pl">pl</option>
-                        <option value="pt">pt</option>
-                        <option value="pt-BR" selected>pt-BR</option>
-                        <option value="rm">rm</option>
-                        <option value="ro">ro</option>
-                        <option value="ro-MO">ro-MO</option>
-                        <option value="ru">ru</option>
-                        <option value="ru-MI">ru-MI</option>
-                        <option value="sb">sb</option>
-                        <option value="sk">sk</option>
-                        <option value="sl">sl</option>
-                        <option value="sq">sq</option>
-                        <option value="sr">sr</option>
-                        <option value="sv">sv</option>
-                        <option value="sv-FI">sv-FI</option>
-                        <option value="sx">sx</option>
-                        <option value="sz">sz</option>
-                        <option value="th">th</option>
-                        <option value="tn">tn</option>
-                        <option value="tr">tr</option>
-                        <option value="ts">ts</option>
-                        <option value="uk">uk</option>
-                        <option value="ur">ur</option>
-                        <option value="ve">ve</option>
-                        <option value="vi">vi</option>
-                        <option value="xh">xh</option>
-                        <option value="zh-CN">zh-CN</option>
-                        <option value="zh-HK">zh-HK</option>
-                        <option value="zh-SG">zh-SG</option>
-                        <option value="zh-TW">zh-TW</option>
-                        <option value="zu">zu</option>
-                    </select>
-                </div>
-            </form>
-        </fieldset>
-        <fieldset id="ActivityFieldset">
-            <legend>Activity</legend>
-            <textarea id="activity" readonly></textarea>
-        </fieldset>
-    </div>
-    <fieldset id="statusFieldset">
-        <legend>Status</legend>
-        <div id="statusContainer">
-            <div class="statusDiv">
-                <b>started: </b>
-                <br>
-                <p class='status' id="started">
-                </p>
-            </div>
-            <div class="statusDiv">
-                <b>lastSent: </b>
-                <br>
-                <p class='status' id="lastSent"></p>
-            </div>
-            <div class="statusDiv">
-                <b>avgPerMinute: </b>
-                <br>
-                <p class='status' id="avgPerMinute"></p>
-            </div>
-            <div class="statusDiv">
-                <b>instantAvg: </b>
-                <br>
-                <p class='status' id="instantAvg"></p>
-            </div>
-            <div class="statusDiv">
-                <b>delay: </b>
-                <br>
-                <p class='status' id="delay"></p>
-            </div>
-            <div class="statusDiv">
-                <b>totalSent: </b>
-                <br>
-                <p class='status' id="totalSent"></p>
-            </div>
-            <div class="statusDiv">
-                <b>notSent: </b>
-                <br>
-                <p class='status' id="notSent"></p>
-            </div>
-            <div class="statusDiv">
-                <b>errorIntervals: </b>
-                <br>
-                <p class='status' id="errorIntervals"></p>
-            </div>
-            <div class="statusDiv">
-                <b>errorLastDate: </b>
-                <br>
-                <p class='status' id="errorLastDate"></p>
-            </div>
-            <div class="statusDiv">
-                <b>captchaIntervals: </b>
-                <br>
-                <p class='status' id="captchaIntervals"></p>
-            </div>
-            <div class="statusDiv">
-                <b>captchaLastDate: </b>
-                <br>
-                <p class='status' id="captchaLastDate"></p>
-            </div>
+                    <div class="formDiv">
+                        <label for='Language'>Language: </label>
+                        <select name="Language" id="Language">
+                            <option value="af">af</option>
+                            <option value="ar-AE">ar-AE</option>
+                            <option value="ar-BH">ar-BH</option>
+                            <option value="ar-DZ">ar-DZ</option>
+                            <option value="ar-EG">ar-EG</option>
+                            <option value="ar-IQ">ar-IQ</option>
+                            <option value="ar-JO">ar-JO</option>
+                            <option value="ar-KW">ar-KW</option>
+                            <option value="ar-LB">ar-LB</option>
+                            <option value="ar-LY">ar-LY</option>
+                            <option value="ar-MA">ar-MA</option>
+                            <option value="ar-OM">ar-OM</option>
+                            <option value="ar-QA">ar-QA</option>
+                            <option value="ar-SA">ar-SA</option>
+                            <option value="ar-SY">ar-SY</option>
+                            <option value="ar-TN">ar-TN</option>
+                            <option value="ar-YE">ar-YE</option>
+                            <option value="be">be</option>
+                            <option value="bg">bg</option>
+                            <option value="ca">ca</option>
+                            <option value="cs">cs</option>
+                            <option value="da">da</option>
+                            <option value="de">de</option>
+                            <option value="de-AT">de-AT</option>
+                            <option value="de-CH">de-CH</option>
+                            <option value="de-LI">de-LI</option>
+                            <option value="de-LU">de-LU</option>
+                            <option value="el">el</option>
+                            <option value="en">en</option>
+                            <option value="en-AU">en-AU</option>
+                            <option value="en-BZ">en-BZ</option>
+                            <option value="en-CA">en-CA</option>
+                            <option value="en-EG">en-EG</option>
+                            <option value="en-GB">en-GB</option>
+                            <option value="en-IE">en-IE</option>
+                            <option value="en-JM">en-JM</option>
+                            <option value="en-NZ">en-NZ</option>
+                            <option value="en-TT">en-TT</option>
+                            <option value="en-US">en-US</option>
+                            <option value="en-ZA">en-ZA</option>
+                            <option value="es">es</option>
+                            <option value="es-AR">es-AR</option>
+                            <option value="es-BO">es-BO</option>
+                            <option value="es-CL">es-CL</option>
+                            <option value="es-CO">es-CO</option>
+                            <option value="es-CR">es-CR</option>
+                            <option value="es-DO">es-DO</option>
+                            <option value="es-EC">es-EC</option>
+                            <option value="es-GT">es-GT</option>
+                            <option value="es-HN">es-HN</option>
+                            <option value="es-MX">es-MX</option>
+                            <option value="es-NI">es-NI</option>
+                            <option value="es-PA">es-PA</option>
+                            <option value="es-PE">es-PE</option>
+                            <option value="es-PR">es-PR</option>
+                            <option value="es-PY">es-PY</option>
+                            <option value="es-SV">es-SV</option>
+                            <option value="es-UY">es-UY</option>
+                            <option value="es-VE">es-VE</option>
+                            <option value="et">et</option>
+                            <option value="eu">eu</option>
+                            <option value="fa">fa</option>
+                            <option value="fi">fi</option>
+                            <option value="fo">fo</option>
+                            <option value="fr">fr</option>
+                            <option value="fr-BE">fr-BE</option>
+                            <option value="fr-CA">fr-CA</option>
+                            <option value="fr-CH">fr-CH</option>
+                            <option value="fr-LU">fr-LU</option>
+                            <option value="gd">gd</option>
+                            <option value="gd-IE">gd-IE</option>
+                            <option value="he">he</option>
+                            <option value="hi">hi</option>
+                            <option value="hr">hr</option>
+                            <option value="hu">hu</option>
+                            <option value="id">id</option>
+                            <option value="is">is</option>
+                            <option value="it">it</option>
+                            <option value="it-CH">it-CH</option>
+                            <option value="ja">ja</option>
+                            <option value="ji">ji</option>
+                            <option value="ko">ko</option>
+                            <option value="lt">lt</option>
+                            <option value="lv">lv</option>
+                            <option value="mk">mk</option>
+                            <option value="mt">mt</option>
+                            <option value="nl">nl</option>
+                            <option value="nl-BE">nl-BE</option>
+                            <option value="no">no</option>
+                            <option value="pl">pl</option>
+                            <option value="pt">pt</option>
+                            <option value="pt-BR" selected>pt-BR</option>
+                            <option value="rm">rm</option>
+                            <option value="ro">ro</option>
+                            <option value="ro-MO">ro-MO</option>
+                            <option value="ru">ru</option>
+                            <option value="ru-MI">ru-MI</option>
+                            <option value="sb">sb</option>
+                            <option value="sk">sk</option>
+                            <option value="sl">sl</option>
+                            <option value="sq">sq</option>
+                            <option value="sr">sr</option>
+                            <option value="sv">sv</option>
+                            <option value="sv-FI">sv-FI</option>
+                            <option value="sx">sx</option>
+                            <option value="sz">sz</option>
+                            <option value="th">th</option>
+                            <option value="tn">tn</option>
+                            <option value="tr">tr</option>
+                            <option value="ts">ts</option>
+                            <option value="uk">uk</option>
+                            <option value="ur">ur</option>
+                            <option value="ve">ve</option>
+                            <option value="vi">vi</option>
+                            <option value="xh">xh</option>
+                            <option value="zh-CN">zh-CN</option>
+                            <option value="zh-HK">zh-HK</option>
+                            <option value="zh-SG">zh-SG</option>
+                            <option value="zh-TW">zh-TW</option>
+                            <option value="zu">zu</option>
+                        </select>
+                    </div>
+                </form>
+            </fieldset>
+            <fieldset id="ActivityFieldset">
+                <legend>Activity</legend>
+                <textarea id="activity" readonly></textarea>
+            </fieldset>
         </div>
-    </fieldset>
+        <fieldset id="statusFieldset">
+            <legend>Status</legend>
+            <div id="statusContainer">
+                <div class="statusDiv">
+                    <b>started: </b>
+                    <br>
+                    <p class='status' id="started">
+                    </p>
+                </div>
+                <div class="statusDiv">
+                    <b>lastSent: </b>
+                    <br>
+                    <p class='status' id="lastSent"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>avgPerMinute: </b>
+                    <br>
+                    <p class='status' id="avgPerMinute"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>instantAvg: </b>
+                    <br>
+                    <p class='status' id="instantAvg"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>delay: </b>
+                    <br>
+                    <p class='status' id="delay"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>totalSent: </b>
+                    <br>
+                    <p class='status' id="totalSent"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>notSent: </b>
+                    <br>
+                    <p class='status' id="notSent"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>errorIntervals: </b>
+                    <br>
+                    <p class='status' id="errorIntervals"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>errorLastDate: </b>
+                    <br>
+                    <p class='status' id="errorLastDate"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>captchaIntervals: </b>
+                    <br>
+                    <p class='status' id="captchaIntervals"></p>
+                </div>
+                <div class="statusDiv">
+                    <b>captchaLastDate: </b>
+                    <br>
+                    <p class='status' id="captchaLastDate"></p>
+                </div>
+            </div>
+        </fieldset>
+    </section>
+    <section id="troubleshotOverlay">
+        <div id="troubleshotContent">
+            <span style="float: right" onclick="troubleshotOverlay.style.display = 'none'">&#x274C;</span>
+            <br>
+            Troubleshot:
+            <br>
+            <ul>
+                <li>Restart your internet connection (change your ip address).</li>
+                <li>Change the messages: some words or whole phrases can be blocked by Omegle.</li>
+                <li>A lower target average can lead to a higher running time without interventions.</li>
+                <li>Not all languages were tested, this can lead the bot to work in english whatever the selected
+                    language.</li>
+                <li>Running the bot with the browser interface visible can lead to errors (This option was made only to
+                    watch and not to interact).</li>
+            </ul>
+            Status:
+            <br>
+            <ul>
+                <li>
+                    <b>started: </b>Last time bot started.
+                </li>
+                <li>
+                    <b>lastSent: </b>Last time a message was sent.
+                </li>
+                <li>
+                    <b>avgPerMinute: </b>Average of messages sent per minute since started.
+                </li>
+                <li>
+                    <b>instantAvg: </b>Average per minute considering time between the five last messages sent.
+                </li>
+                <li>
+                    <b>delay: </b>Delay between keystrokes in miliseconds.
+                </li>
+                <li>
+                    <b>totalSent: </b>Messages sent since started.
+                </li>
+                <li>
+                    <b>notSent: </b>Amount of times that not all messages setted were sent.
+                </li>
+                <li>
+                    <b>errorIntervals: </b>Last five intervals between errors in minutes, from first to last.
+                </li>
+                <li>
+                    <b>errorLastDate: </b>Last time an error ocurred.
+                </li>
+                <li>
+                    <b>captchaIntervals: </b>Last five intervals between captchas solved in minutes, from first to last.
+                </li>
+                <li>
+                    <b>captchaLastDate: </b>Last time a was captcha solved.
+                </li>
+            </ul>
 
+        </div>
+    </section>
 </body>
 <script defer src="renderer.js"></script>
 

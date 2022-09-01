@@ -2,16 +2,6 @@ targetspan.innerHTML = Target.value;
 backdropRefresh();
 let working  = false;
 
-/*
-let infos = document.getElementsByClassName('status');
-for (info of infos) {
-    info.innerHTML = "[00.00, 00.00, 00.00, 00.00, 00.00]";
-    //info.innerHTML = "2011-10-05T14:48:00.000Z";
-    activity.value += "\nsomething\nsomething else\nMessage not sent, problably stranger disconnected\nmore";
-}
-activity.scrollTop = activity.scrollHeight;
-*/
-
 function backdropRefresh(){
     if(Message.value.indexOf('\n') === 0) {
         Message.value = Message.value.slice(1, Message.value.length);
@@ -42,7 +32,7 @@ function onButtonClick(){
     if(working === false){
         startBot();
     }else{
-        waitForStop();
+        resquestStop();
     }
 }
 
@@ -51,13 +41,11 @@ function toggleForm() {
 }
 
 function newActivity(lastActivity) {
-    //LIMPAR
     while(activity.value.length > 1000){
         activity.value = activity.value.slice(100,activity.value.length)
     }
     activity.value += "\n" + lastActivity
     activity.scrollTop = activity.scrollHeight;
-
 }
 
 function updateStatus(status) {
@@ -91,7 +79,7 @@ function startBot() {
     submit.value = "Stop";
 }
 
-function waitForStop() {
+function resquestStop() {
     window.electronAPI.stop();
     submit.style = "background: linear-gradient(180deg, rgba(255, 200, 100, 1) 0%, rgba(0, 0, 0, 1) 100%);";
     submit.value = "Wait";
@@ -102,12 +90,12 @@ function botStoped(){
     toggleForm();
     submit.style = '';
     submit.value = 'Start'
+    new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
+        .onclick = () => window.electronAPI.maximize();
 }
 
 window.electronAPI.stoped(()=>{
     botStoped();
-    new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
-        .onclick = () => window.electronAPI.maximize();
 })
 
 window.electronAPI.activity((ev,args)=>{

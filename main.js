@@ -8,6 +8,7 @@ function createWindow () {
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, 'logocropped.png'),
         webPreferences: {
+            spellcheck: false,
             preload: path.join(__dirname, 'preload.js')
         },
         width: 950,

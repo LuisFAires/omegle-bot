@@ -85,7 +85,7 @@ async function launchBrowser(msg, targetAvg, headless, language){
         lastSent: "",
         avgPerMinute: NaN,
         instantAvg: [],
-        delay: 50,
+        delay: parseInt(60000/targetAvg/msg.length),
         totalSent: 0,
         notSent: 0,
         errorIntervals: [],

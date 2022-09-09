@@ -98,7 +98,7 @@ async function launchBrowser(msg, targetAvg, headless, language){
     mainWindow.webContents.send('activity',"Launching browser...");
     const puppeteer = require('puppeteer-extra');
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-    const solve = require('./solver.js');
+    const solve = require('./puppeteer-recaptcha-solver/index.js');
     puppeteer.use(StealthPlugin());
     const browser = await puppeteer.launch({ headless: headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
     let page;

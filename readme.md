@@ -1,22 +1,21 @@
-# <img src="logocropped.png" alt="logo" style="height: 20px;"> Omegle-Bot [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# <img src="logocropped.png" alt="logo" style="height: 20px;"> Omegle-Bot [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.txt)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JS](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![ELECTRON](https://img.shields.io/badge/Electron-2B2E3A?style=for-the-badge&logo=electron&logoColor=9FEAF9)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Puppeteer](https://img.shields.io/badge/Puppeteer-40B5A4?style=for-the-badge&logo=Puppeteer&logoColor=white)
-#
-## Description:
+### Description:
 Application to send messages to strangers at bulk, this is the only omegle bot with GUI 💻🖱️ (at least the only I could find🔍🔍🚫)
 
 ![Omegle-Bot GUI](demo.gif)
-## Functionality:
+### Functionality:
 The bot is fully functional✅, being capable of sending messages at bulk 💬, and solve captchas to keep doing it's work for a longer period of time 🤖⏱, the only annoyance that you will have using it is the Omegle's bot detection that is pretty good 😒🤦‍♂️😥. The maximum running time achieved by me was 3 days ⌛⌛⌛, but the usual is several hours 🤔.
 #
-## Goals:
+### Goals:
 This project was done with the purpose of learning new coding skills  👨‍💻🐱‍💻🚀🔍🎓🤓, it's the first project I have ever done using Electron JS framework 🏆.
 #
-## Usage:  
+### Usage:  
 1. Get the dependencies: ⬇️📚
 ```
 npm i

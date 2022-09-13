@@ -15,7 +15,7 @@ function createWindow () {
         height: 710,
         resizable: false,
     })
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile(path.join(__dirname, 'index.html'))
     mainWindow.setMenu(null)
     //mainWindow.webContents.openDevTools()
 
@@ -43,6 +43,13 @@ app.whenReady().then(async () => {
         stop = true
     })
 
+    mainWindow.on('ready-to-show', () => {
+        const fs = require('fs');
+        fs.readFile(path.join(__dirname, 'botconfig.json'), 'utf8', (err, data) => {
+            mainWindow.webContents.send('readedConfig', data);;
+        });
+    })
+
     const { ipcMain, Tray, Menu } = require('electron')
     
     tray = new Tray(path.join(__dirname, 'logocropped.png'))
@@ -66,6 +73,10 @@ app.whenReady().then(async () => {
 
         
     ipcMain.on('start', function(event, args){
+        tray.setImage(path.join(__dirname, 'working.png'));
+        let config = JSON.stringify(args, null, 4);
+        const fs = require('fs');
+        fs.writeFileSync(path.join(__dirname, 'botconfig.json'), config);
         launchBrowser(args.msg, args.targetAvg, args.headless, args.language);
     });
 
@@ -98,7 +109,7 @@ async function launchBrowser(msg, targetAvg, headless, language){
     mainWindow.webContents.send('activity',"Launching browser...");
     const puppeteer = require('puppeteer-extra');
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-    const solve = require('./puppeteer-recaptcha-solver/index.js');
+    const solve = require(path.join(__dirname, 'puppeteer-recaptcha-solver/index.js'));
     puppeteer.use(StealthPlugin());
     const browser = await puppeteer.launch({ headless: headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
     let page;
@@ -132,7 +143,8 @@ async function launchBrowser(msg, targetAvg, headless, language){
                 agreementScreen();
             }else{
                 await browser.close();
-                mainWindow.webContents.send('stoped');
+                tray.setImage(path.join(__dirname, 'stopped.png'));
+                mainWindow.webContents.send('stopped');
             }
         }
     }
@@ -143,14 +155,16 @@ async function launchBrowser(msg, targetAvg, headless, language){
                 mainWindow.webContents.send('activity',"Stop request");
                 mainWindow.webContents.send('activity',"Closing browser...");
                 await browser.close();
-                mainWindow.webContents.send('stoped');
+                tray.setImage(path.join(__dirname, 'stopped.png'));
+                mainWindow.webContents.send('stopped');
                 return
             }
             if(areIntervalsTooLow(status.captchaIntervals) || areIntervalsTooLow(status.errorIntervals)){
                 mainWindow.webContents.send('activity',"Intervals too low");
                 mainWindow.webContents.send('activity',"Closing browser...");
                 await browser.close();
-                mainWindow.webContents.send('stoped');
+                tray.setImage(path.join(__dirname, 'stopped.png'));
+                mainWindow.webContents.send('stopped');
                 return
             }
             mainWindow.webContents.send('activity',"Waiting for stranger...")
@@ -221,7 +235,7 @@ async function launchBrowser(msg, targetAvg, headless, language){
             chatScreen();
         }
         catch(err){
-            try{ await page.screenshot( { path: "./errors/"+Date.now()+".png", fullPage: true }); }catch{}
+            try{ await page.screenshot( { path: path.join(__dirname, "./errors/"+Date.now()+".png"), fullPage: true }); }catch{}
             if(status.errorIntervals.length >= 5){ status.errorIntervals.shift(); }
             if(status.errorLastDate == ""){
                 status.errorIntervals.push(parseFloat(((new Date() - new Date(status.started))/1000/60).toFixed(1)));

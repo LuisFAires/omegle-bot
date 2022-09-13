@@ -1,7 +1,3 @@
-targetspan.innerHTML = Target.value;
-backdropRefresh();
-let working  = false;
-
 function backdropRefresh(){
     if(Message.value.indexOf('\n') === 0) {
         Message.value = Message.value.slice(1, Message.value.length);
@@ -85,17 +81,31 @@ function resquestStop() {
     submit.value = "Wait";
 }
 
-function botStoped(){
+function botstopped(){
     working = false;
     toggleForm();
     submit.style = '';
     submit.value = 'Start'
-    new Notification('Omegle-bot', { body: 'Bot stoped: see the activity and status section for more information' })
+    new Notification('Omegle-bot', { body: 'Bot stopped: see the activity and status section for more information' })
         .onclick = () => window.electronAPI.maximize();
 }
 
-window.electronAPI.stoped(()=>{
-    botStoped();
+window.electronAPI.readedConfig((ev, args) => {
+    args = JSON.parse(args);
+    Message.value = args.msg;
+    Target.value = args.targetAvg;
+    Headless.checked = args.headless;
+    Language.value = args.language;
+    backdropRefresh();
+    targetspan.innerHTML = Target.value;
+});
+
+targetspan.innerHTML = Target.value;
+backdropRefresh();
+let working  = false;
+
+window.electronAPI.stopped(()=>{
+    botstopped();
 })
 
 window.electronAPI.activity((ev,args)=>{

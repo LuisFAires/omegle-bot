@@ -39,8 +39,10 @@ app.whenReady().then(async () => {
     })
 
     app.on('window-all-closed', () => {
-        if (process.platform !== 'darwin') app.quit()
-        stop = true
+        if (process.platform !== 'darwin'){
+            app.quit()
+            stop = true
+        }
     })
 
     mainWindow.on('ready-to-show', () => {

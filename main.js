@@ -79,7 +79,7 @@ app.whenReady().then(async () => {
         let config = JSON.stringify(args, null, 4);
         const fs = require('fs');
         fs.writeFileSync(path.join(__dirname, 'botconfig.json'), config);
-        launchBrowser(args.msg, args.targetAvg, args.headless, args.language);
+        launchBrowser(args.msg, args.delay , args.headless, args.language);
     });
 
     ipcMain.on('stop', () =>{
@@ -91,14 +91,14 @@ app.whenReady().then(async () => {
     })
 })
 
-async function launchBrowser(msg, targetAvg, headless, language){
+async function launchBrowser(msg, delay, headless, language){
 
     let status = {
         started: new Date().toISOString(),
         lastSent: "",
         avgPerMinute: NaN,
         instantAvg: [],
-        delay: parseInt(60000/targetAvg/msg.length),
+        delay: delay,
         totalSent: 0,
         notSent: 0,
         errorIntervals: [],
@@ -211,11 +211,6 @@ async function launchBrowser(msg, targetAvg, headless, language){
                 status.totalSent++;
                 if(status.lastSent != "" )status.instantAvg.push(parseFloat((60 / ((new Date() - new Date(status.lastSent))/1000)).toFixed(2)));
                 if(status.instantAvg.length > 5) status.instantAvg.shift();
-                if(status.delay > 10){
-                    getArrAvg(status.instantAvg) > targetAvg ? status.delay++ : status.delay--;
-                }else{
-                    status.delay++
-                }
                 status.lastSent = new Date().toISOString();
                 status.avgPerMinute = parseFloat((status.totalSent / ((new Date(status.lastSent) - new Date(status.started)) / 1000 / 60)).toFixed(2));
                 mainWindow.webContents.send('activity',"Message sent")

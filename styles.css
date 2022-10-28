@@ -38,7 +38,7 @@ img {
     justify-content: center;
 }
 
-#target,
+#delayinput,
 select {
     width: 100%;
 }

@@ -27,9 +27,9 @@
                     </div>
 
                     <div class="formDiv">
-                        <label for='Target'>Average per minute target: </label><span id="targetspan"></span>
-                        <input id='Target' type="range" min="1" max="40" value="15"
-                            oninput="targetspan.innerHTML = Target.value">
+                        <label for='delayinput'>Delay between keystrokes: </label><span id="delayspan"></span>
+                        <input id='delayinput' type="range" min="10" max="200" value="15"
+                            oninput="delayspan.innerHTML = delayinput.value">
                     </div>
 
                     <div class="formDiv">
@@ -240,7 +240,7 @@
             <ul>
                 <li>Restart your internet connection (change your ip address).</li>
                 <li>Change the messages: some words or whole phrases can be blocked by Omegle.</li>
-                <li>A lower target average can lead to a higher running time without interventions.</li>
+                <li>A higher delay can lead to a higher running time without interventions.</li>
                 <li>Not all languages were tested, this can lead the bot to work in English whatever the selected
                     language.</li>
                 <li>Running the bot with the browser interface visible can lead to errors (This option was made only to

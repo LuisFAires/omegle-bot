@@ -25,14 +25,14 @@ npm i
 npm start
 ```
 3. Type whatever messages you want to send ⌨️
-4. Set a target speed ⏩🏃‍♂️
+4. Set the delay between keystrokes speed ⏩🏃‍♂️
 5. Choose the language you want 🗺️👅🗣️
 6. Click the start button ▶️🖱️
 #
 ### Troubleshot:   
 * Restart your internet connection (change your ip address).🌐↔️🕸️📬
 * Change the messages: some words or whole phrases can be blocked by Omegle. ❗❓❔❕
-* A lower target average can lead to a higher running time without interventions. 🔧⚒️⚙️📈
+* A higher delay can lead to a higher running time without interventions. 🔧⚒️⚙️📈
 * Not all languages were tested, this can lead the bot to work in English whatever the selected language.🤐❌
 * Running the bot with the browser interface visible can lead to errors (This option was made only to watch and not to interact).⌚🚫👈
 #

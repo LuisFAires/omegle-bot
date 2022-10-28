@@ -66,7 +66,7 @@ function startBot() {
     toggleForm();
     window.electronAPI.start({
         msg: Message.value,
-        targetAvg: parseInt(Target.value),
+        delay: delayinput.value,
         headless: Headless.checked,
         language: Language.value
     })
@@ -93,14 +93,14 @@ function botstopped(){
 window.electronAPI.readedConfig((ev, args) => {
     args = JSON.parse(args);
     Message.value = args.msg;
-    Target.value = args.targetAvg;
+    delayinput.value = args.delay;
     Headless.checked = args.headless;
     Language.value = args.language;
     backdropRefresh();
-    targetspan.innerHTML = Target.value;
+    delayspan.innerHTML = delayinput.value;
 });
 
-targetspan.innerHTML = Target.value;
+delayspan.innerHTML = delayinput.value;
 backdropRefresh();
 let working  = false;
 

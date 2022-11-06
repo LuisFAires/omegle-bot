@@ -50,6 +50,9 @@ function updateStatus(status) {
     for (stat in status) {
         statEl[i].innerHTML = status[stat];
         i++
+        if(i >= statEl.length){
+            break;
+        }
     }
     statEl[0].innerHTML = new Date(statEl[0].innerHTML).toLocaleString();
     statEl[1].innerHTML = new Date(statEl[1].innerHTML).toLocaleString();

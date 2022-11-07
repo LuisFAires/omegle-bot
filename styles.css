@@ -147,9 +147,16 @@ select {
     width: 100%;
 }
 
+#delayspan::after {
+    content: 'ms';
+}
+
 #statusFieldset {
     min-height: 270px;
     height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 ul {

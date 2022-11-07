@@ -1,11 +1,11 @@
-
-async function launchBrowser(msg, delay, headless, language, mainWindow){
+async function launchBrowser(args, mainWindow){
 
     const puppeteer = require('puppeteer-extra');
     const StealthPlugin = require('puppeteer-extra-plugin-stealth');
     const path = require('path');
     const solve = require(path.join(__dirname, 'puppeteer-recaptcha-solver/index.js'));
     const status = require(path.join(__dirname, 'botstatus.js'));
+    const restart = require(path.join(__dirname,'restart.js'));
     puppeteer.use(StealthPlugin());
 
     //SET STATUS
@@ -13,17 +13,18 @@ async function launchBrowser(msg, delay, headless, language, mainWindow){
     status.lastSent = '';
     status.avgPerMinute = NaN;
     status.instantAvg = [];
-    status.delay = delay;
+    status.delay = args.delay;
     status.totalSent = 0;
     status.notSent = 0;
     status.errorIntervals = [];
     status.errorLastDate = '';
     status.captchaIntervals = [];
     status.captchaLastDate = '';
+    status.restart = args.restart;
     status.stop = false;
 
     mainWindow.webContents.send('activity',"Launching browser...");
-    const browser = await puppeteer.launch({ headless: headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
+    const browser = await puppeteer.launch({ headless: args.headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
     let page;
     agreementScreen();
 
@@ -40,7 +41,7 @@ async function launchBrowser(msg, delay, headless, language, mainWindow){
                         return language;
                     }
                 });
-            }, language);
+            }, args.language);
     
             await page.goto('https://omegle.com');
             mainWindow.webContents.send('activity',"Checking agreements...")
@@ -73,10 +74,27 @@ async function launchBrowser(msg, delay, headless, language, mainWindow){
             }
             if(areIntervalsTooLow(status.captchaIntervals) || areIntervalsTooLow(status.errorIntervals)){
                 mainWindow.webContents.send('activity',"Intervals too low");
-                mainWindow.webContents.send('activity',"Closing browser...");
-                await browser.close();
-                tray.setImage(path.join(__dirname, 'img/stopped.png'));
-                mainWindow.webContents.send('stopped');
+                if(status.restart === true){
+                    await page.close();
+                    try{
+                        mainWindow.webContents.send('activity',"Restarting connection...");
+                        await restart();
+                        mainWindow.webContents.send('activity',"Connection restarted");
+                        status.errorIntervals = [];
+                        status.captchaIntervals = [];
+                        agreementScreen();
+                    }catch{
+                        mainWindow.webContents.send('activity',"Unable to restart connection...");
+                        await browser.close();
+                        tray.setImage(path.join(__dirname, 'img/stopped.png'));
+                        mainWindow.webContents.send('stopped');
+                    }
+                }else{
+                    mainWindow.webContents.send('activity',"Closing browser...");
+                    await browser.close();
+                    tray.setImage(path.join(__dirname, 'img/stopped.png'));
+                    mainWindow.webContents.send('stopped');
+                }
                 return
             }
             mainWindow.webContents.send('activity',"Waiting for stranger...")
@@ -110,7 +128,7 @@ async function launchBrowser(msg, delay, headless, language, mainWindow){
             }
     
             mainWindow.webContents.send('activity',"Typing message...");
-            await page.type(".chatmsg:not([disabled]", msg, {delay: status.delay});
+            await page.type(".chatmsg:not([disabled]", args.msg, {delay: status.delay});
             mainWindow.webContents.send('activity',"Sending message...");
             await page.click("body > div.chatbox3 > div > div > div.controlwrapper > table > tbody > tr > td.sendbthcell > div > button", {delay: status.delay});
             

@@ -19,7 +19,7 @@ function createWindow () {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setMenu(null);
     mainWindow.maximize();
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
 
     mainWindow.on('minimize',function(event){
         event.preventDefault();
@@ -63,7 +63,7 @@ app.whenReady().then(async () => {
         tray.setImage(path.join(__dirname, 'img/working.png'));
         let config = JSON.stringify(args, null, 4);
         fs.writeFileSync(path.join(__dirname, 'botconfig.json'), config);
-        bot.launchBrowser(args.msg, args.delay , args.headless, args.language, mainWindow);
+        bot.launchBrowser(args, mainWindow);
     });
 
     ipcMain.on('stop', () =>{

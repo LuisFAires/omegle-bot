@@ -71,6 +71,7 @@ function startBot() {
         msg: Message.value,
         delay: delayinput.value,
         headless: Headless.checked,
+        restart: restart.checked,
         language: Language.value
     })
     working = true;

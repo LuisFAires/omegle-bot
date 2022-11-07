@@ -93,6 +93,11 @@ function botstopped(){
         .onclick = () => window.electronAPI.maximize();
 }
 
+delayspan.innerHTML = delayinput.value;
+backdropRefresh();
+window.addEventListener('resize', backdropRefresh);
+let working  = false;
+
 window.electronAPI.readedConfig((ev, args) => {
     args = JSON.parse(args);
     Message.value = args.msg;
@@ -102,10 +107,6 @@ window.electronAPI.readedConfig((ev, args) => {
     backdropRefresh();
     delayspan.innerHTML = delayinput.value;
 });
-
-delayspan.innerHTML = delayinput.value;
-backdropRefresh();
-let working  = false;
 
 window.electronAPI.stopped(()=>{
     botstopped();

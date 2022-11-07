@@ -13,13 +13,13 @@ function createWindow () {
             spellcheck: false,
             preload: path.join(__dirname, 'preload.js')
         },
-        width: 950,
-        height: 710,
-        resizable: false,
+        minWidth: 800,
+        minHeight: 765,
     })
-    mainWindow.loadFile(path.join(__dirname, 'index.html'))
-    mainWindow.setMenu(null)
-    //mainWindow.webContents.openDevTools()
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
+    mainWindow.setMenu(null);
+    mainWindow.maximize();
+    mainWindow.webContents.openDevTools()
 
     mainWindow.on('minimize',function(event){
         event.preventDefault();

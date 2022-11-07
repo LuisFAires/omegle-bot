@@ -1,57 +1,27 @@
 body {
     background: #fff7ee;
-    overflow: hidden;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     margin: 0;
     user-select: none;
     counter-reset: section;
 }
 
 header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     height: 57px;
-    width: 98%;
-    padding: 8px;
-    box-shadow: 0 0.25em 0.75em #ccc;
+    padding: 8px 1%;
+    box-shadow: 0 4px 11px #ccc;
     background-color: #fff;
+}
+
+#logoContainer {
+    display: inline-block;
+    height: 57px;
 }
 
 img {
     width: 236px;
     height: 57px;
-}
-
-#mainSection {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#delayinput,
-select {
-    width: 100%;
-}
-
-#submit {
-    background: linear-gradient(180deg, rgba(127, 190, 255, 1) 0%, rgba(3, 126, 254, 1) 100%);
-    color: #fff;
-    border: none;
-    border-radius: 0.5em;
-    height: 50px;
-    width: 124px;
-    font-size: 25px;
-    padding: 10px;
 }
 
 #title {
@@ -64,40 +34,60 @@ select {
     left: 10px;
 }
 
-fieldset {
-    margin-top: 5px;
-    background-color: #fff;
-    border-radius: 0.5em;
-    border: 1px solid #CCC;
-    box-shadow: inset 0 0 0.5em #bbb;
+#submit {
+    float: right;
+    background: linear-gradient(180deg, rgba(127, 190, 255, 1) 0%, rgba(3, 126, 254, 1) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    height: 57px;
+    width: 124px;
+    font-size: 25px;
+    padding: 10px;
+}
+
+#mainSection {
+    display: flex;
+    justify-content: center;
 }
 
 legend {
     font-weight: bold;
     background-color: #fff;
     border: 1px solid #CCC;
-    border-radius: 0.5em;
+    border-radius: 8px;
 }
 
-#fieldsetContainer {
-    width: 98%;
-    height: 350px;
+.sideSection {
+    height: calc(100vh - 73px);
+    min-height: 630px;
+    width: 50vw;
+    display: inline-block;
+
+}
+
+.flexColumn {
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
 }
 
-#OptionsFieldset,
-#ActivityFieldset {
-    width: 50%;
+fieldset {
+    box-sizing: border-box;
+    padding: 2%;
+    margin: 2%;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #CCC;
+    box-shadow: inset 0 0 8px #bbb;
 }
 
 #OptionsFieldset {
+    height: 65%;
+    position: relative;
     z-index: 1;
-}
-
-#statusFieldset {
-    width: 95%;
-    height: 220px;
 }
 
 form {
@@ -112,6 +102,24 @@ form {
 
 .formDiv {
     width: 100%;
+    margin: 2px 0;
+}
+
+.formDiv:nth-of-type(1) {
+    height: 70%;
+    min-height: 45px;
+}
+
+.formDiv:nth-of-type(2),
+.formDiv:nth-of-type(5) {
+    height: 10%;
+    min-height: 45px;
+}
+
+.formDiv:nth-of-type(3),
+.formDiv:nth-of-type(4) {
+    height: 5%;
+    min-height: 20px;
 }
 
 .backdropSpan::before {
@@ -128,29 +136,32 @@ form {
 #Message {
     background-color: rgba(0, 0, 0, 0);
     width: 100%;
-    height: 170px;
+    height: 85%;
     resize: none;
-    padding-left: 30px
+    padding-left: 30px;
+    box-sizing: border-box;
 }
 
-#statusContainer {
+#delayinput,
+select {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
 }
 
-.statusDiv {
-    width: 200px;
-    height: 60px;
-    margin: 2px;
+#statusFieldset {
+    min-height: 270px;
+    height: 30%;
 }
 
-.status {
+ul {
     margin: 0;
+}
+
+#rightSection {
+    float: right;
+}
+
+#ActivityFieldset {
+    height: 98%;
 }
 
 #activity {
@@ -159,6 +170,8 @@ form {
     height: 100%;
     width: 100%;
     resize: none;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 #troubleshotButton {
@@ -183,7 +196,7 @@ form {
     left: 50%;
     padding: 30px;
     background-color: #fff;
-    border-radius: 0.5em;
+    border-radius: 8px;
     width: 80vw;
     height: 80vh;
     transform: translate(-50%, -50%);

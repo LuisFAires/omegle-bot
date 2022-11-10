@@ -104,6 +104,7 @@ window.electronAPI.readedConfig((ev, args) => {
     Message.value = args.msg;
     delayinput.value = args.delay;
     Headless.checked = args.headless;
+    restart.checked = args.restart;
     Language.value = args.language;
     backdropRefresh();
     delayspan.innerHTML = delayinput.value;

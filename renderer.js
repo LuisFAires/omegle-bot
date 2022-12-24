@@ -37,31 +37,25 @@ function toggleForm() {
 }
 
 function newActivity(lastActivity) {
-    while(activity.value.length > 1000){
-        activity.value = activity.value.slice(100,activity.value.length)
+    while(activity.value.length > 10000){
+        activity.value = activity.value.slice(1000,activity.value.length)
     }
     activity.value += "\n" + lastActivity
     activity.scrollTop = activity.scrollHeight;
 }
 
 function updateStatus(status) {
-    let statEl = document.getElementsByClassName('status')
-    let i = 0;
-    for (stat in status) {
-        statEl[i].innerHTML = status[stat];
-        i++
-        if(i >= statEl.length){
-            break;
-        }
-    }
-    statEl[0].innerHTML = new Date(statEl[0].innerHTML).toLocaleString();
-    statEl[1].innerHTML = new Date(statEl[1].innerHTML).toLocaleString();
-    statEl[8].innerHTML = new Date(statEl[8].innerHTML).toLocaleString();
-    statEl[10].innerHTML = new Date(statEl[10].innerHTML).toLocaleString();
-
-    statEl[3].innerHTML = statEl[3].innerHTML.replace(/,/g, '    ');
-    statEl[7].innerHTML = statEl[7].innerHTML.replace(/,/g, '    ');
-    statEl[9].innerHTML = statEl[9].innerHTML.replace(/,/g, '    ');
+    started.innerHTML = new Date(status.started).toLocaleString();
+    lastSent.innerHTML = new Date(status.lastSent).toLocaleString();
+    errorLastDate.innerHTML = new Date(status.errorLastDate).toLocaleString();
+    captchaLastDate.innerHTML = new Date(status.captchaLastDate).toLocaleString();
+    instantAvg.innerHTML = status.instantAvg.toString().replace(/,/g, ' ');
+    errorIntervals.innerHTML = status.errorIntervals.toString().replace(/,/g, ' ');
+    captchaIntervals.innerHTML = status.captchaIntervals.toString().replace(/,/g, ' ');
+    avgPerMinute.innerHTML = status.avgPerMinute;
+    reconnections.innerHTML = status.reconnections;
+    totalSent.innerHTML = status.totalSent;
+    notSent.innerHTML = status.notSent;
 }
 
 function startBot() {
@@ -80,9 +74,11 @@ function startBot() {
 }
 
 function resquestStop() {
-    window.electronAPI.stop();
-    submit.style = "background: linear-gradient(180deg, rgba(255, 200, 100, 1) 0%, rgba(0, 0, 0, 1) 100%);";
-    submit.value = "Wait";
+    if (window.confirm("Do you really want to stop?")) {
+        window.electronAPI.stop();
+        submit.style = "background: linear-gradient(180deg, rgba(255, 200, 100, 1) 0%, rgba(0, 0, 0, 1) 100%);";
+        submit.value = "Wait";
+    }
 }
 
 function botstopped(){

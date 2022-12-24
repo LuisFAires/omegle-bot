@@ -13,8 +13,6 @@ function createWindow () {
             spellcheck: false,
             preload: path.join(__dirname, 'preload.js')
         },
-        minWidth: 800,
-        minHeight: 765,
     })
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
     mainWindow.setMenu(null);
@@ -26,6 +24,18 @@ function createWindow () {
         mainWindow.hide();
         new Notification({ title: 'Omegle-bot', body: 'App hidden, available in system tray' }).show()
     });
+
+    mainWindow.on('close',(event) =>{
+        const { dialog } = require('electron')
+        let choice = dialog.showMessageBoxSync({
+            message:"Do you really want do exit?",
+            type: "warning",
+            buttons:["Yes", "No"]
+        })
+        if(choice == 1){
+            event.preventDefault()
+        }
+    })
 }
 
 if (process.platform === 'win32'){
@@ -41,8 +51,8 @@ app.whenReady().then(async () => {
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin'){
-            app.quit()
             status.stop = true
+            app.quit();
         }
     })
 

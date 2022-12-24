@@ -11,5 +11,6 @@ module.exports = {
     captchaIntervals: [],
     captchaLastDate: '',
     restart: false,
-    stop: false
+    stop: false,
+    reconnections: 0
 }

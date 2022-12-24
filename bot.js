@@ -9,7 +9,7 @@ async function launchBrowser(args, mainWindow){
     puppeteer.use(StealthPlugin());
 
     //SET STATUS
-    status.started = new Date().toISOString()
+    status.started = new Date().toISOString();
     status.lastSent = '';
     status.avgPerMinute = NaN;
     status.instantAvg = [];
@@ -22,9 +22,10 @@ async function launchBrowser(args, mainWindow){
     status.captchaLastDate = '';
     status.restart = args.restart;
     status.stop = false;
+    status.reconnections = 0;
 
     mainWindow.webContents.send('activity',"Launching browser...");
-    const browser = await puppeteer.launch({ headless: args.headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
+    let browser = await puppeteer.launch({ headless: args.headless, defaultViewport: null, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials']});
     let page;
     agreementScreen();
 
@@ -44,6 +45,16 @@ async function launchBrowser(args, mainWindow){
             }, args.language);
     
             await page.goto('https://omegle.com');
+            let banned = await page.$(".banned");
+            if(banned != null){
+                mainWindow.webContents.send('activity',"banned IP...");
+                if(status.restart == true){
+                    await restartAttempt();
+                    return
+                }else{
+                    status.stop = true;
+                }
+            }
             mainWindow.webContents.send('activity',"Checking agreements...")
             await page.click("#textbtn", {delay: status.delay});
             await page.click("body > div:nth-child(11) > div > p:nth-child(2) > label > input[type=checkbox]", {delay: status.delay});
@@ -55,6 +66,7 @@ async function launchBrowser(args, mainWindow){
             if(status.stop === false){
                 agreementScreen();
             }else{
+                mainWindow.webContents.send('activity',"Closing browser...");
                 await browser.close();
                 tray.setImage(path.join(__dirname, 'img/stopped.png'));
                 mainWindow.webContents.send('stopped');
@@ -64,37 +76,20 @@ async function launchBrowser(args, mainWindow){
     
     async function chatScreen(){
         try{
+            if(areIntervalsTooLow(status.captchaIntervals) || areIntervalsTooLow(status.errorIntervals)){
+                mainWindow.webContents.send('activity',"Intervals too low");
+                if(status.restart === true){
+                   await restartAttempt();
+                   return
+                }else{
+                    status.stop = true;
+                }
+            }
             if(status.stop === true){
-                mainWindow.webContents.send('activity',"Stop request");
                 mainWindow.webContents.send('activity',"Closing browser...");
                 await browser.close();
                 tray.setImage(path.join(__dirname, 'img/stopped.png'));
                 mainWindow.webContents.send('stopped');
-                return
-            }
-            if(areIntervalsTooLow(status.captchaIntervals) || areIntervalsTooLow(status.errorIntervals)){
-                mainWindow.webContents.send('activity',"Intervals too low");
-                if(status.restart === true){
-                    await page.close();
-                    try{
-                        mainWindow.webContents.send('activity',"Restarting connection...");
-                        await restart();
-                        mainWindow.webContents.send('activity',"Connection restarted");
-                        status.errorIntervals = [];
-                        status.captchaIntervals = [];
-                        agreementScreen();
-                    }catch{
-                        mainWindow.webContents.send('activity',"Unable to restart connection...");
-                        await browser.close();
-                        tray.setImage(path.join(__dirname, 'img/stopped.png'));
-                        mainWindow.webContents.send('stopped');
-                    }
-                }else{
-                    mainWindow.webContents.send('activity',"Closing browser...");
-                    await browser.close();
-                    tray.setImage(path.join(__dirname, 'img/stopped.png'));
-                    mainWindow.webContents.send('stopped');
-                }
                 return
             }
             mainWindow.webContents.send('activity',"Waiting for stranger...")
@@ -184,7 +179,7 @@ async function launchBrowser(args, mainWindow){
     }
     
     function areIntervalsTooLow(intervals){
-        let avg = getArrAvg(intervals)
+        let avg = getArrAvg(intervals.slice(intervals.length - 4, intervals.length - 1))
         if(intervals.length >= 3 && avg < 1){
             return true;
         }else{
@@ -192,6 +187,45 @@ async function launchBrowser(args, mainWindow){
         }
     }
 
+    async function restartAttempt(){
+        await page.close();
+        try{
+            mainWindow.webContents.send('activity',"Restarting connection...");
+            let initalIP = await getIP();
+            let finalIP;
+            do{
+                await restart();
+                finalIP = await getIP();
+            }while(finalIP === initalIP || finalIP === false);
+            mainWindow.webContents.send('activity',"Connection restarted");
+            status.errorIntervals = [];
+            status.captchaIntervals = [];
+            agreementScreen();
+            return
+        }catch(err){
+            console.log(err);
+            mainWindow.webContents.send('activity',"Unable to restart connection...");
+            status.stop = true;
+            mainWindow.webContents.send('stopped');
+        }
+    }
+
+    async function getIP(){
+        let axios = require("axios");
+
+        try{
+            return axios.get("http://ip-api.com/json/?fields=query,status").then((res) => {
+                if(res.data.status != "success") {
+                    return false
+                }else{
+                    return res.data.query;
+                }
+            })
+        }catch{
+            await new Promise(r => setTimeout(r, 1500));
+            return false;
+        }
+    }
 }
 
 module.exports = {

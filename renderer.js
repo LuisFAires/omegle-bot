@@ -66,6 +66,7 @@ function startBot() {
         delay: delayinput.value,
         headless: Headless.checked,
         restart: restart.checked,
+        autostart: autostart.checked,
         language: Language.value
     })
     working = true;
@@ -101,9 +102,11 @@ window.electronAPI.readedConfig((ev, args) => {
     delayinput.value = args.delay;
     Headless.checked = args.headless;
     restart.checked = args.restart;
+    autostart.checked = args.autostart;
     Language.value = args.language;
     backdropRefresh();
     delayspan.innerHTML = delayinput.value;
+    if(args.autostart) startBot()
 });
 
 window.electronAPI.stopped(()=>{

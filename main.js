@@ -58,7 +58,7 @@ app.whenReady().then(async () => {
 
     mainWindow.on('ready-to-show', () => {
         fs.readFile(path.join(__dirname, 'botconfig.json'), 'utf8', (err, data) => {
-            mainWindow.webContents.send('readedConfig', data);;
+            mainWindow.webContents.send('readedConfig', data);
         });
     })
     

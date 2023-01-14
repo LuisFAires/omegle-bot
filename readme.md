@@ -8,7 +8,7 @@
 ### Description:
 Application to send messages to strangers at bulk, this is the only omegle bot with GUI 💻🖱️ (at least the only I could find🔍🔍🚫)
 
-![Omegle-Bot GUI](img/demo.png)
+![Omegle-Bot GUI](img/demo.gif)
 ### Functionality:
 The bot is fully functional✅, being capable of sending messages at bulk 💬, and solve captchas to keep doing it's work for a longer period of time 🤖⏱, the only annoyance that you will have using it is the Omegle's bot detection that is pretty good 😒🤦‍♂️😥. The maximum running time achieved by me was 3 days ⌛⌛⌛, but the usual is several hours 🤔.
 #
@@ -19,8 +19,12 @@ This project was done with the purpose of learning new coding skills  👨‍�
 1. Get the dependencies: ⬇️📚
 ```
 npm i
-```  
-2. Start the application: ✨
+```
+2.  Set .env environment variable file with your wit.ai authorization key for captcha solving
+```
+WITAI_AUTHORIZATION=YOUR_KEY
+```
+3. Start the application: ✨
 ```
 npm start
 ```

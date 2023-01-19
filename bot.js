@@ -197,6 +197,7 @@ async function launchBrowser(args, mainWindow){
                 await restart();
                 finalIP = await getIP();
             }while(finalIP === initalIP || finalIP === false);
+            status.reconnections++
             mainWindow.webContents.send('activity',"Connection restarted");
             status.errorIntervals = [];
             status.captchaIntervals = [];
